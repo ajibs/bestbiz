@@ -8,12 +8,14 @@ router.get('/', (req, res) => {
   res.send('hello world');
 });
 
+/*
 router.get('/signup', userController.showSignup);
 router.post(
   '/signup',
   authController.validateSignup,
   authController.signup
 );
+*/
 
 router.get('/login', userController.showLogin);
 router.post('/login', authController.login);
