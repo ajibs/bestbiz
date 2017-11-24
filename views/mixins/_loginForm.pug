@@ -1,0 +1,11 @@
+mixin loginForm(actionType)
+  section(class="container-fluid")
+    div(class="form-container col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3")
+      form(action=`/${actionType}` method="POST")
+        h2(class="text-uppercase") #{title}
+        input(type="hidden" name="_csrf" value= csrfToken)
+        div(class="form-group")
+          input(type="text" name="username" class="form-control" placeholder="enter username" required)
+        div(class="form-group")
+          input(type="password" name="password" class="form-control" placeholder="enter password" minlength="4" required)
+        button(type="submit" class="btn btn-success btn-lg") Submit
