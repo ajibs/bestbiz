@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  section(class="container-fluid")
+    div(class="form-container col-md-6 col-md-offset-3")
+      h2 Your #{title}
+      div(class="account-type")
+      if user.local
+        h3(class="text-uppercase") Welcome  #{user.local.username}
+      a(href="/explore")
+        button(class="btn btn-primary btn-lg icon-wrapper") Search Listings
+      a(href="/create-listing" class="btn btn-success btn-lg icon-wrapper") Create a Listing

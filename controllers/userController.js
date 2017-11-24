@@ -10,3 +10,10 @@ exports.showLogin = (req, res) => {
     title: 'Login'
   });
 };
+
+
+exports.showProfile = (req, res) => {
+  res.render('profile', {
+    title: 'Profile'
+  });
+};
