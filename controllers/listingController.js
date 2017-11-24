@@ -70,14 +70,20 @@ exports.showExplore = async (req, res) => {
 
 
 exports.searchListings = async (req, res) => {
-  let { name } = req.body;
-  name = name.toLowerCase();
-  const listings = await Business.find({ name });
+  const query = req.body.query.toLowerCase();
+  const name = query;
+  let listings = await Business.find({ name });
 
   if (!listings.length) {
-    req.flash('failed', 'Listings not found for that query');
-    res.redirect('back');
-    return;
+    // TODO: improve description search algorithm
+    const description = query;
+    listings = await Business.find({ description });
+
+    if (!listings.length) {
+      req.flash('failed', 'Listings not found for that query');
+      res.redirect('back');
+      return;
+    }
   }
 
   res.render('explore', {
