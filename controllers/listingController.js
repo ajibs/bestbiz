@@ -88,7 +88,7 @@ exports.getListingsByNameOrDescription = async (req, res) => {
   const listings = await searchDB(req.body.term.toLowerCase());
 
   if (!listings.length) {
-    req.flash('failed', 'Listings not found for that query');
+    req.flash('failed', `Listings not found for '${req.body.term}'`);
     res.redirect('back');
     return;
   }
