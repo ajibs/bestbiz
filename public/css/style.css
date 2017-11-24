@@ -60,11 +60,11 @@ footer {
       width: 350px;
   }
 
-  #landing-button-tour-guide {
+  #landing-button-admin {
       margin-left: 15px;
   }
 
-  #landing-button-experiences {
+  #landing-button-listings {
       margin-right: 15px;
   }
 }
@@ -165,7 +165,7 @@ footer {
   font-weight: bold;
 }
 
-.view-experiences{
+.view-listings{
   display: flex;
   justify-content: center;
   align-items: center;

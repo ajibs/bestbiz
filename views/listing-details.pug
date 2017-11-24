@@ -1,0 +1,23 @@
+extends layout
+
+include mixins/_listingInfo
+
+block content
+  section(class="container")
+    div(class="form-container col-md-offset-2 col-md-8 col-xs-12")
+      div(class="row")
+        div(class="col-md-10 col-md-offset-1 col-xs-12")
+          div(class="listing-group")
+            img(class="card-img-top" src="/images/photo0.jpeg" alt="")
+            h1(class="text-uppercase") #{listing.name}
+              h3(class="text-uppercase text-faded")
+      +listingInfo('Address', listing.address)
+      +listingInfo('Description', listing.description)
+      +listingInfo('Website', listing.website)
+      +listingInfo('Email', listing.email)
+      +listingInfo('Phone', listing.phone)
+      +listingInfo('Categories', listing.categories)
+      div(class="row")
+        div(class="col-md-10 col-md-offset-1 col-xs-12 .form-footer")
+          a(href=`mailto:${listing.email}`)
+            button(class="btn btn-primary btn-lg") Contact Business

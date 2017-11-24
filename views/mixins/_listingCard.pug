@@ -1,0 +1,19 @@
+mixin listingCard(result, title, link)
+  section(class="container")
+    div(class="form-container")
+      h2(class="section-title") #{title}
+      div(class="row")
+        each business in result
+            div(class="col-lg-4 col-md-6 mb-4")
+              div(class="card h-100")
+                a(href=`/listing/${business._id}`)
+                  img(class="card-img-top" src="images/photo0.jpeg" alt="")
+                div(class="card-body")
+                  a(href=`/listing/${business._id}`)
+                    h2(class="card-title") #{business.name}
+                  p(class="card-text") #{business.description}
+                div(class="card-footer")
+                  small(class="text-muted") &#9733; &#9733; &#9733; &#9733; &#9734;
+
+      div(class="view-listings")
+        a(href=`${link}` class="btn btn-lg btn-primary") View more Listings

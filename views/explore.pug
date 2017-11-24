@@ -1,0 +1,18 @@
+extends layout
+
+include mixins/_listingCard
+
+block content
+  <!-- Landing Image -->
+  header(id="search-wrapper")
+    div(class="container")
+      div(class="row")
+        div(class="col-xs-12 col-md-8 col-md-offset-2 text-center")
+          h1(class="super-title") Explore Listings
+          form(action="/explore" method="post")
+            input(type="hidden" name="_csrf" value= csrfToken)
+            input(class="form-control" type="text" name="name" placeholder="Enter a name or description")
+            input(class="btn btn-primary btn-lg top-wrapper" type="submit" value="Search")
+
+
+    +listingCard(listings, '', '#')

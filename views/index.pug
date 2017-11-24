@@ -1,0 +1,20 @@
+extends layout
+
+include mixins/_listingCard
+
+block content
+  header
+    div(class="container")
+      div(class="row")
+        div(class="col-md-12")
+          h1(class="super-title") Find Businesses
+          a(href="/explore" id="landing-button-listings" class="btn btn-lg landing-button")
+            i(class="fa fa-users fa-lg" aria-hidden="true")
+            span(class="landing-button-text") Explore Listings
+          a(href="/create-listing" id="landing-button-admin" class="btn btn-lg landing-button")
+            i(class="fa fa-automobile fa-lg" aria-hidden="true")
+            span(class="landing-button-text") Create a Listing
+          p(class="sub-text")
+            span(class="sub-inner-text") Thousands of Local Businesses for you to explore
+
+  +listingCard(listings, 'Featured Listings', '/explore')
