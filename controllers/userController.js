@@ -3,3 +3,10 @@ exports.showSignup = (req, res) => {
     title: 'Signup'
   });
 };
+
+
+exports.showLogin = (req, res) => {
+  res.render('login', {
+    title: 'Login'
+  });
+};
