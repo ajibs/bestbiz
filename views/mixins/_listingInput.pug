@@ -1,0 +1,5 @@
+mixin listingInput(item, htmlType)
+  div(class="row")
+    div(class="form-group col-sm-8")
+      label(for=`${item}`) #{item}
+      input(class="form-control" type=`${htmlType}` name=`${item}` id=`${item}`)
