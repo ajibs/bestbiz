@@ -118,8 +118,9 @@ exports.seedDB = async (req, res) => {
     phone: '+23412345678',
     categories: [
       'software development',
-      'design',
-      'user Business'
+      ' design',
+      ' user experience',
+      ' business'
     ]
   };
   const companies = [
