@@ -1,5 +1,8 @@
-mixin listingInput(item, htmlType, example)
+mixin listingInput(item, htmlType, example, data = {}, options)
   div(class="row")
     div(class="form-group col-sm-8")
-      label(for=`${item}`) #{item}
-      input(class="form-control" type=`${htmlType}` name=`${item}` id=`${item}` placeholder=`${example}` required)
+      label(for=`${item}` class="text-capitalize") #{item}
+      if (options)
+        input(class="form-control" type=`${htmlType}` name=`${item}` value=data[item].join(', ') id=`${item}` placeholder=`${example}` required)
+      else
+        input(class="form-control" type=`${htmlType}` name=`${item}` value=data[item] id=`${item}` placeholder=`${example}` required)

@@ -40,14 +40,25 @@ router.post(
 
 
 router.get('/listing/:id', catchErrors(listingController.showSingleListing));
+router.get(
+  '/listing/:id/edit',
+  authController.isLoggedIn,
+  catchErrors(listingController.editListing)
+);
+router.post(
+  '/create-listing/:id',
+  authController.isLoggedIn,
+  catchErrors(listingController.updateListing)
+)
+
 
 router.get('/explore', catchErrors(listingController.showExplore));
 router.post('/explore', catchErrors(listingController.getListingsByNameOrDescription));
 
+
 // search API
 // http://localhost:3000/api/search/?q=
 router.get('/api/search/', catchErrors(listingController.searchListings));
-
 
 router.get('/logout', authController.logout);
 

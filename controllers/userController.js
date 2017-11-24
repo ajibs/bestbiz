@@ -3,7 +3,7 @@ const { JSDOM } = require('jsdom');
 
 const { window } = (new JSDOM(''));
 const DOMPurify = createDOMPurify(window);
-
+const Business = require('../models/Business');
 
 exports.showSignup = (req, res) => {
   res.render('signup', {
@@ -19,9 +19,11 @@ exports.showLogin = (req, res) => {
 };
 
 
-exports.showProfile = (req, res) => {
+exports.showProfile = async (req, res) => {
+  const listings = await Business.find();
   res.render('profile', {
-    title: 'Profile'
+    title: 'Profile',
+    listings
   });
 };
 

@@ -127,19 +127,9 @@ footer {
   color: #fff;
   margin-bottom: 20px;
   margin-right: 20px;
+  margin-top: 30px;
 }
 
-.btn-bg-facebook {
-  background-color: #507cc0;
-}
-
-.btn-bg-twitter {
-  background-color: #1da1f2;
-}
-
-.btn-bg-google {
-  background-color: #df4930;
-}
 
 .login-alt {
   margin-top: 20px;
@@ -185,7 +175,7 @@ footer {
 .form-header {
   margin-bottom: 50px;
 }
-
+form-footer
 .form-footer {
   margin-top: 30px;
 }
@@ -261,4 +251,14 @@ h5 {
 
 .btn-primary {
   background-color: #07c;
+}
+
+.btn-bg-modify {
+  background-color: #868e96;
+  border-color: #868e96;
+}
+
+.btn-bg-delete {
+  background-color: #dc3545;
+  border-color:  #dc3545;
 }

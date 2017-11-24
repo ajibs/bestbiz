@@ -18,6 +18,9 @@ block content
       +listingInfo('Phone', listing.phone)
       +listingInfo('Categories', listing.categories)
       div(class="row")
-        div(class="col-md-10 col-md-offset-1 col-xs-12 .form-footer")
+        div(class="col-md-10 col-md-offset-1 col-xs-12")
           a(href=`mailto:${listing.email}`)
-            button(class="btn btn-primary btn-lg") Contact Business
+            button(class="btn btn-primary btn-lg icon-wrapper") Contact Business
+          if user
+            a(href=`/listing/${listing.id}/edit`)
+              button(class="btn btn-primary btn-lg icon-wrapper btn-bg-modify") Modify

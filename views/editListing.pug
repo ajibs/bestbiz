@@ -1,0 +1,20 @@
+extends layout
+
+include mixins/_listingInput
+
+block content
+  pre= h.dump(listing)
+  section(class="container-fluid")
+    div(class="form-container col-md-6 col-md-offset-3")
+      h1(class="form-header text-capitalize") #{title}
+      form(action=`/create-listing/${listing._id || ''}` method="POST")
+        input(type="hidden" name="_csrf" value= csrfToken)
+        +listingInput('name', 'text', 'enter name', listing)
+        +listingInput('address', 'text', 'enter address', listing)
+        +listingInput('description', 'textarea', 'enter a description', listing)
+        +listingInput('website', 'url', 'http://example.com', listing)
+        +listingInput('email', 'email', 'enter an email', listing)
+        +listingInput('phone', 'tel', '+2347012345678', listing)
+        +listingInput('categories', 'text', 'enter categories separated by comma', listing, listing._id)
+        div(form-footer form-group pull-right)
+          input(class="btn btn-success" type="submit" value="Submit")

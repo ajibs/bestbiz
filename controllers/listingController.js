@@ -14,15 +14,16 @@ exports.showHome = async (req, res) => {
 
 
 exports.showListingForm = (req, res) => {
-  res.render('create-listing', {
-    title: 'Create Listing'
+  res.render('editListing', {
+    title: 'Create Listing',
+    listing: {}
   });
 };
 
 
 // TODO: export function to a helpers file
 function extractCategories(data, result) {
-  const arrayOptions = data.options.split(',');
+  const arrayOptions = data.categories.split(',');
   arrayOptions.forEach((item) => {
     result.categories.push(item);
   });
@@ -37,11 +38,12 @@ exports.addNewListing = async (req, res) => {
 
   await formattedListing.save();
 
-  req.flash('success', 'Listing Created Successfully');
+  req.flash('success', `Successfully created <strong>${listing.name}</strong>. <a href="/listing/${listing._id}">View Listing</a>`);
   res.redirect('/profile');
 };
 
 
+// TODO: get listing by slug
 exports.showSingleListing = async (req, res) => {
   const listing = await Business.findOne({ _id: req.params.id });
 
@@ -51,13 +53,39 @@ exports.showSingleListing = async (req, res) => {
     return;
   }
 
-  res.render('listing-details', {
+  res.render('listingDetails', {
     title: 'Listing Details',
     listing
   });
 };
 
 
+exports.editListing = async (req, res) => {
+  const listing = await Business.findOne({ _id: req.params.id });
+
+  res.render('editListing', {
+    title: `Edit ${listing.name}`,
+    listing
+  });
+};
+
+
+exports.updateListing = async (req, res) => {
+  const listing = await Business.findOneAndUpdate(
+    { _id: req.params.id },
+    req.body,
+    {
+      new: true,
+      runValidators: true
+    }
+  );
+
+  req.flash('success', `Successfully updated <strong>${listing.name}</strong>. <a href="/listing/${listing._id}">View Listing</a>`);
+  res.redirect(`/listing/${listing._id}/edit`);
+};
+
+
+// TODO: pagination after every 8 listings
 exports.showExplore = async (req, res) => {
   const listings = await Business.find({})
     .sort({ created: 'desc' })
