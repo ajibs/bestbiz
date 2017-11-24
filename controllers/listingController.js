@@ -3,7 +3,7 @@ const Business = require('../models/Business');
 
 exports.showHome = async (req, res) => {
   const listings = await Business.find({})
-    .sort({ created: 'desc' })  // sort according to the most recent
+    .sort({ created: 'desc' })
     .limit(6);
 
   res.render('index', {
@@ -109,8 +109,8 @@ exports.searchListings = async (req, res) => {
 
 
 // TODO: export function to a helpers file
+// create demo data
 exports.seedDB = async (req, res) => {
-  // create demo data
   const baseData = {
     address: 'lagos, nigeria',
     website: 'http://devcenter.co',
@@ -136,7 +136,7 @@ exports.seedDB = async (req, res) => {
 
   const demo = await companies.map(company => Object.assign({}, baseData, company));
 
-  await Business.remove({}, () => { // empty database then save documents
+  await Business.remove({}, () => {
     demo.forEach((element) => {
       new Business(element).save();
     });

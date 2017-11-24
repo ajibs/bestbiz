@@ -33,13 +33,14 @@ section {
 footer {
   margin-top: 40px;
   text-align: center;
+  padding: 10px;
 }
 
 .landing-button {
   text-transform: uppercase;
   background-color: #003580;
   color: white;
-  width: 80%;
+  width: 90%;
   margin-bottom: 30px;
   border-radius: 5px;
   padding: 20px
@@ -229,6 +230,7 @@ h5 {
 .card-title {
   font-weight: bold;
   color: blue;
+  text-transform: capitalize;
   margin-bottom: .75rem;
 }
 
