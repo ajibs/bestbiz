@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const businessModel = new mongoose.Schema({
+const businessSchema = new mongoose.Schema({
   name: {
     type: String,
     trim: true,
@@ -27,8 +27,19 @@ const businessModel = new mongoose.Schema({
     type: String,
     required: 'You must supply a phone number!'
   },
-  categories: [String]
+  categories: [String],
+  created: {
+    type: Date,
+    default: Date.now
+  },
 });
 
 
-module.exports = mongoose.model('Business', businessModel);
+// define our indexes
+businessSchema.index({
+  name: 'text',
+  description: 'text'
+});
+
+
+module.exports = mongoose.model('Business', businessSchema);

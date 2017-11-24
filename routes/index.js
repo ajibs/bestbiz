@@ -41,11 +41,15 @@ router.post(
 
 router.get('/listing/:id', catchErrors(listingController.showSingleListing));
 
-router.get('/explore', listingController.showExplore);
-router.post('/explore', catchErrors(listingController.searchListings));
+router.get('/explore', catchErrors(listingController.showExplore));
+router.post('/explore', catchErrors(listingController.getListingsByNameOrDescription));
+
+// search API
+// http://localhost:3000/api/search/?q=
+router.get('/api/search/', catchErrors(listingController.searchListings));
+
 
 router.get('/logout', authController.logout);
-
-router.get('/seed', listingController.seedDB);
+router.get('/seed', catchErrors(listingController.seedDB));
 
 module.exports = router;

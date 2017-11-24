@@ -3,7 +3,7 @@ const Business = require('../models/Business');
 
 exports.showHome = async (req, res) => {
   const listings = await Business.find({})
-    .sort({ _id: -1 }) // sort according to the most recent
+    .sort({ created: 'desc' })  // sort according to the most recent
     .limit(6);
 
   res.render('index', {
@@ -20,6 +20,7 @@ exports.showListingForm = (req, res) => {
 };
 
 
+// TODO: export function to a helpers file
 function extractCategories(data, result) {
   const arrayOptions = data.options.split(',');
   arrayOptions.forEach((item) => {
@@ -59,7 +60,7 @@ exports.showSingleListing = async (req, res) => {
 
 exports.showExplore = async (req, res) => {
   const listings = await Business.find({})
-    .sort({ _id: -1 })
+    .sort({ created: 'desc' })
     .limit(18);
 
   res.render('explore', {
@@ -69,36 +70,49 @@ exports.showExplore = async (req, res) => {
 };
 
 
-exports.searchListings = async (req, res) => {
-  const query = req.body.query.toLowerCase();
-  const name = query;
-  let listings = await Business.find({ name });
+// TODO: export function to a helpers file
+async function searchDB(value) {
+  const results = await Business.find({
+    $text: {
+      $search: value
+    }
+  })
+    .sort({ created: 'desc' })
+    .limit(5);
+
+  return results;
+}
+
+
+exports.getListingsByNameOrDescription = async (req, res) => {
+  const listings = await searchDB(req.body.term.toLowerCase());
 
   if (!listings.length) {
-    // TODO: improve description search algorithm
-    const description = query;
-    listings = await Business.find({ description });
-
-    if (!listings.length) {
-      req.flash('failed', 'Listings not found for that query');
-      res.redirect('back');
-      return;
-    }
+    req.flash('failed', 'Listings not found for that query');
+    res.redirect('back');
+    return;
   }
 
+  req.flash('success', `Listings found for '${req.body.term}'`);
   res.render('explore', {
     title: 'Explore',
-    listings
+    listings,
+    flashes: req.flash()
   });
 };
 
 
+exports.searchListings = async (req, res) => {
+  const listings = await searchDB(req.query.q.toLowerCase());
+  res.json(listings);
+};
+
+
+// TODO: export function to a helpers file
 exports.seedDB = async (req, res) => {
   // create demo data
-  const demo = {
-    name: 'devcenter',
+  const baseData = {
     address: 'lagos, nigeria',
-    description: 'hire a verified african software developer',
     website: 'http://devcenter.co',
     email: 'hello@devcenter.co',
     phone: '+23412345678',
@@ -108,14 +122,23 @@ exports.seedDB = async (req, res) => {
       'user Business'
     ]
   };
+  const companies = [
+    { name: 'konga', description: 'buy anything online' },
+    { name: 'devcenter', description: 'hire great developers' },
+    { name: 'paystack', description: 'simple payments' },
+    { name: 'andela', description: 'training world class developers' },
+    { name: 'jumia', description: 'best online shopping' },
+    { name: 'flutterwave', description: 'powerful payments apis' },
+    { name: 'devcenter', description: 'hire great developers' },
+    { name: 'devcenter', description: 'hire great developers' }
+  ];
 
-  Business.remove({}, () => { // empty database then save documents
-    let i = 0;
-    while (i < 25) {
-      const listing = new Business(demo);
-      listing.save();
-      i++;
-    }
+  const demo = await companies.map(company => Object.assign({}, baseData, company));
+
+  await Business.remove({}, () => { // empty database then save documents
+    demo.forEach((element) => {
+      new Business(element).save();
+    });
   });
 
   req.flash('success', 'Database Seeded Successfully');

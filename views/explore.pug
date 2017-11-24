@@ -11,7 +11,7 @@ block content
           h1(class="super-title") Explore Listings
           form(action="/explore" method="post")
             input(type="hidden" name="_csrf" value= csrfToken)
-            input(class="form-control" type="text" name="query" placeholder="Enter a name or description")
+            input(class="form-control" type="text" name="term" placeholder="Enter a name or description")
             input(class="btn btn-primary btn-lg top-wrapper" type="submit" value="Search")
 
 
