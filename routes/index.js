@@ -50,6 +50,8 @@ router.get('/api/search/', catchErrors(listingController.searchListings));
 
 
 router.get('/logout', authController.logout);
+
+// TODO: comment out route
 router.get('/seed', catchErrors(listingController.seedDB));
 
 module.exports = router;
