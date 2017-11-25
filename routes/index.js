@@ -1,9 +1,10 @@
 const express = require('express');
-const router = express.Router();
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 const listingController = require('../controllers/listingController');
 const { catchErrors } = require('../handlers/errorHandlers');
+
+const router = express.Router();
 
 
 router.get('/', catchErrors(listingController.showHome));
@@ -67,7 +68,6 @@ router.post(
 );
 
 
-// TODO: Change to POST request for enhanced security
 router.post(
   '/delete-listing',
   authController.isLoggedIn,
@@ -87,5 +87,6 @@ router.get('/logout', authController.logout);
 
 // TODO: comment out route
 router.get('/seed', catchErrors(listingController.seedDB));
+
 
 module.exports = router;

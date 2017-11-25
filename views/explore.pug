@@ -3,7 +3,6 @@ extends layout
 include mixins/_listingCard
 
 block content
-  <!-- Landing Image -->
   header(id="search-wrapper")
     div(class="container")
       div(class="row")
@@ -13,6 +12,5 @@ block content
             input(type="hidden" name="_csrf" value= csrfToken)
             input(class="form-control" type="text" name="term" placeholder="Enter a name or description")
             input(class="btn btn-primary btn-lg top-wrapper" type="submit" value="Search")
-
 
   +listingCard(listings, '', '#')
