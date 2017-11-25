@@ -22,7 +22,10 @@ block content
           a(href=`mailto:${listing.email}`)
             button(class="btn btn-primary btn-lg icon-wrapper") Contact Business
           if user
-            button(class="btn btn-success btn-lg icon-wrapper") #{listing.views} Views
+            if (listing.views === 1)
+              button(class="btn btn-success btn-lg icon-wrapper") #{listing.views} View
+            else
+              button(class="btn btn-success btn-lg icon-wrapper") #{listing.views} Views
             a(href=`/listing/${listing.id}/edit`)
               button(class="btn btn-info btn-lg icon-wrapper") Modify
             form(action=`/delete-listing` method="POST")
