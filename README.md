@@ -19,12 +19,14 @@ Bestbiz is hosted on Heroku and can be accessed here:
 - [Production](https://bestbiz.herokuapp.com/)
 
 ### Search API:
-  - Make a GET request via ``` https://bestbiz.herokuapp.com/api/search/?q= ```
+Make a GET request via
+  > ``` https://bestbiz.herokuapp.com/api/search/?q= ```
+
   - The value of ``` q ``` could be a listing name or description
   - Output is in JavaScript Object Notation (JSON)
 #### Example
-The following example requests all listings that match the query 'payments' :
-  - ``` https://bestbiz.herokuapp.com/api/search/?q=payments ```
+The following example requests all listings that match the query '``` payments ```' :
+  > ``` https://bestbiz.herokuapp.com/api/search/?q=payments ```
 
 
 ## Prerequisites
