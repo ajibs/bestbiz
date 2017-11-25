@@ -53,6 +53,11 @@ exports.showSingleListing = async (req, res) => {
     return;
   }
 
+  if (!req.user) {
+    listing.views += 1;
+    await listing.save();
+  }
+
   res.render('listingDetails', {
     title: 'Listing Details',
     listing
@@ -164,8 +169,8 @@ exports.seedDB = async (req, res) => {
     { name: 'andela', description: 'training world class developers' },
     { name: 'jumia', description: 'best online shopping' },
     { name: 'flutterwave', description: 'powerful payments apis' },
-    { name: 'devcenter', description: 'hire great developers' },
-    { name: 'devcenter', description: 'hire great developers' }
+    { name: 'hotels.ng', description: 'book hotels in nigeria' },
+    { name: 'booking.com', description: 'largest hotel booking website' }
   ];
 
   const demo = await companies.map(company => Object.assign({}, baseData, company));
