@@ -252,3 +252,15 @@ h5 {
 .btn-primary {
   background-color: #07c;
 }
+
+@media (min-width: 600px) {
+  .large-search {
+    display: inline;
+    width: 80%;
+    margin-right: 10px;
+  }
+
+  .top-wrapper {
+    margin-top: 0px;
+  }
+}
