@@ -264,3 +264,56 @@ h5 {
     margin-top: 0px;
   }
 }
+
+ul {
+  display: block;
+  list-style-type: disc;
+  -webkit-margin-before: 1em;
+  -webkit-margin-after: 1em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  -webkit-padding-start: 40px;
+}
+
+.tags {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 2rem;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.tag__choice {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.tag__choice input {
+  width: auto;
+  right: -1.5rem;
+  margin-right: -1rem;
+  position: relative;
+  z-index: 2;
+}
+
+[type="checkbox"], [type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+label {
+  padding: 10px 0;
+  display: block;
+}
+
+.tag__choice input + label {
+  background: #e6e6e6;
+  padding: 1rem 1rem 1rem 4rem;
+}

@@ -19,10 +19,10 @@ exports.showLogin = (req, res) => {
 };
 
 
-exports.showProfile = async (req, res) => {
+exports.showDashboard = async (req, res) => {
   const listings = await Business.find();
-  res.render('profile', {
-    title: 'Profile',
+  res.render('dashboard', {
+    title: 'Dashboard',
     listings
   });
 };

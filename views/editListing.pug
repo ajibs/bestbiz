@@ -14,6 +14,15 @@ block content
         +listingFormInput('website', 'url', 'http://example.com', listing)
         +listingFormInput('email', 'email', 'enter an email', listing)
         +listingFormInput('phone', 'tel', '+2347012345678', listing)
-        +listingFormInput('categories', 'text', 'enter categories separated by comma', listing, listing._id)
+
+        label(class="text-capitalize") Categories
+        - const categories = listing.categories || []
+        ul.tags
+          each choice in choices
+            .tag.tag__choice
+              input(type="checkbox" id=choice value=choice name="categories" checked=(categories.includes(choice)))
+              label(for=choice) #{choice}
+
         div(form-footer form-group pull-right)
           input(class="btn btn-success" type="submit" value="Submit")
+

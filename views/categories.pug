@@ -1,0 +1,16 @@
+extends layout
+
+include mixins/_listingFormInput
+
+block content
+  section(class="container-fluid")
+    div(class="form-container col-md-6 col-md-offset-3")
+      h1(class="form-header text-capitalize") #{title}
+      form(action="/categories" method="POST")
+        input(type="hidden" name="_csrf" value= csrfToken)
+        +listingFormInput('category', 'text', 'enter a new category')
+        div(form-footer form-group)
+          input(class="btn btn-success" type="submit" value="Submit")
+      div
+        each c in allCategories
+          h3 #{c.name}

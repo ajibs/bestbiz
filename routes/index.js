@@ -26,15 +26,15 @@ router.post(
 );
 
 router.get(
-  '/profile',
+  '/dashboard',
   authController.isLoggedIn,
-  userController.showProfile
+  catchErrors(userController.showDashboard)
 );
 
 router.get(
   '/create-listing',
   authController.isLoggedIn,
-  listingController.showListingForm
+  catchErrors(listingController.showListingForm)
 );
 router.post(
   '/create-listing',
@@ -81,6 +81,19 @@ router.get(
   '/api/search/',
   userController.sanitizeData,
   catchErrors(listingController.searchListings)
+);
+
+
+router.get(
+  '/categories',
+  authController.isLoggedIn,
+  listingController.categories
+);
+router.post(
+  '/categories',
+  authController.isLoggedIn,
+  userController.sanitizeData,
+  listingController.createCategory
 );
 
 router.get('/logout', authController.logout);

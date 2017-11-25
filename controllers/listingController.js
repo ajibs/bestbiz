@@ -1,4 +1,5 @@
 const Business = require('../models/Business');
+const Category = require('../models/Category');
 
 
 exports.showHome = async (req, res) => {
@@ -13,30 +14,26 @@ exports.showHome = async (req, res) => {
 };
 
 
-exports.showListingForm = (req, res) => {
+exports.showListingForm = async (req, res) => {
+  const allCategories = await Category.find();
+  const choices = allCategories.map(element => element.name);
   res.render('editListing', {
     title: 'Create Listing',
-    listing: {}
+    listing: {},
+    choices
   });
 };
 
 
 // TODO: export function to a helpers file
-function extractCategories(data, result) {
-  const arrayOptions = data.categories.split(',');
-  arrayOptions.forEach((item) => {
-    result.categories.push(item);
-  });
-
-  return result;
+function extractCategories(data) {
+  return data.split(',');
 }
 
 
 exports.addNewListing = async (req, res) => {
-  const listing = new Business(req.body);
-  const formattedListing = extractCategories(req.body, listing);
-
-  await formattedListing.save();
+  req.body.categories = extractCategories(req.body.categories);
+  const listing = await (new Business(req.body)).save();
 
   req.flash('success', `Successfully created <strong class="text-capitalize">${listing.name}</strong>`);
   res.redirect(`/listing/${listing._id}`);
@@ -67,15 +64,20 @@ exports.showSingleListing = async (req, res) => {
 
 exports.editListing = async (req, res) => {
   const listing = await Business.findOne({ _id: req.params.id });
+  const allCategories = await Category.find();
+  const choices = allCategories.map(element => element.name);
 
   res.render('editListing', {
     title: `Edit ${listing.name}`,
-    listing
+    listing,
+    choices
   });
 };
 
 
 exports.updateListing = async (req, res) => {
+  req.body.categories = extractCategories(req.body.categories);
+
   const listing = await Business.findOneAndUpdate(
     { _id: req.params.id },
     req.body,
@@ -87,6 +89,7 @@ exports.updateListing = async (req, res) => {
 
   req.flash('success', `Successfully updated <strong>${listing.name}</strong>. <a href="/listing/${listing._id}">View Listing</a>`);
   res.redirect(`/listing/${listing._id}/edit`);
+  */
 };
 
 
@@ -144,8 +147,34 @@ exports.searchListings = async (req, res) => {
 exports.deleteListing = async (req, res) => {
   await Business.deleteOne({ _id: req.body.id });
   req.flash('success', 'Successfully deleted listing');
-  res.redirect('/profile');
+  res.redirect('/dashboard');
 };
+
+
+exports.categories = async (req, res) => {
+  const allCategories = await Category.find();
+  res.render('categories', {
+    title: 'Categories',
+    allCategories
+  });
+};
+
+
+exports.createCategory = async (req, res) => {
+  const name = req.body.category;
+  const exists = await Category.findOne({ name });
+
+  if (exists) {
+    req.flash('failed', 'Category exists!');
+    res.redirect('back');
+    return;
+  }
+
+  await (new Category({ name, listings: [] })).save();
+  req.flash('success', `<strong>${name}</strong> added to categories`);
+  res.redirect('/categories');
+};
+
 
 // TODO: export function to a helpers file
 // create demo data

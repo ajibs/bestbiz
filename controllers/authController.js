@@ -3,13 +3,13 @@ require('../handlers/passportConfig.js')(passport);
 
 
 exports.signup = passport.authenticate('local-signup', {
-  successRedirect: '/profile',
+  successRedirect: '/dashboard',
   failureRedirect: '/signup'
 });
 
 
 exports.login = passport.authenticate('local-login', {
-  successRedirect: '/profile',
+  successRedirect: '/dashboard',
   failureRedirect: '/login'
 });
 
