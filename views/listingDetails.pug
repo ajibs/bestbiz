@@ -22,8 +22,9 @@ block content
           a(href=`mailto:${listing.email}`)
             button(class="btn btn-primary btn-lg icon-wrapper") Contact Business
           if user
-            button(class="btn btn-success btn-lg icon-wrapper" id="test") #{listing.views} Views
+            button(class="btn btn-success btn-lg icon-wrapper") #{listing.views} Views
             a(href=`/listing/${listing.id}/edit`)
               button(class="btn btn-info btn-lg icon-wrapper") Modify
-            a(href=`/listing/${listing.id}/delete`)
-              button(class="btn btn-danger btn-lg icon-wrapper" id="test") Delete
+            form(action=`/delete-listing` method="POST")
+              input(type="hidden" name="_csrf" value= csrfToken)
+              button(class="btn btn-danger btn-lg icon-wrapper" name='id' value=`${listing.id}`) Delete

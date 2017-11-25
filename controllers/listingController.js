@@ -142,7 +142,7 @@ exports.searchListings = async (req, res) => {
 
 
 exports.deleteListing = async (req, res) => {
-  await Business.deleteOne({ _id: req.params.id });
+  await Business.deleteOne({ _id: req.body.id });
   req.flash('success', 'Successfully deleted listing');
   res.redirect('/profile');
 };
