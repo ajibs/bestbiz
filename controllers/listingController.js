@@ -152,8 +152,8 @@ exports.deleteListing = async (req, res) => {
 exports.seedDB = async (req, res) => {
   const baseData = {
     address: 'lagos, nigeria',
-    website: 'http://devcenter.co',
-    email: 'hello@devcenter.co',
+    website: 'https://domain.com',
+    email: 'hello@domain.com',
     phone: '+23412345678',
     categories: [
       'software development',
