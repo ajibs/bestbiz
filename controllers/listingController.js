@@ -89,7 +89,6 @@ exports.updateListing = async (req, res) => {
 
   req.flash('success', `Successfully updated <strong>${listing.name}</strong>. <a href="/listing/${listing._id}">View Listing</a>`);
   res.redirect(`/listing/${listing._id}/edit`);
-  */
 };
 
 
