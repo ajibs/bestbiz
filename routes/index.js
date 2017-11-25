@@ -56,6 +56,12 @@ router.get('/explore', catchErrors(listingController.showExplore));
 router.post('/explore', catchErrors(listingController.getListingsByNameOrDescription));
 
 
+router.get(
+  '/listing/:id/delete',
+  authController.isLoggedIn,
+  catchErrors(listingController.deleteListing)
+);
+
 // search API
 // http://localhost:3000/api/search/?q=
 router.get('/api/search/', catchErrors(listingController.searchListings));

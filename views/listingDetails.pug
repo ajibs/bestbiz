@@ -23,4 +23,6 @@ block content
             button(class="btn btn-primary btn-lg icon-wrapper") Contact Business
           if user
             a(href=`/listing/${listing.id}/edit`)
-              button(class="btn btn-primary btn-lg icon-wrapper btn-bg-modify") Modify
+              button(class="btn btn-info btn-lg icon-wrapper") Modify
+            a(href=`/listing/${listing.id}/delete`)
+              button(class="btn btn-danger btn-lg icon-wrapper" id="test") Delete

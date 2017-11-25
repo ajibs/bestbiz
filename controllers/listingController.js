@@ -38,8 +38,8 @@ exports.addNewListing = async (req, res) => {
 
   await formattedListing.save();
 
-  req.flash('success', `Successfully created <strong>${listing.name}</strong>. <a href="/listing/${listing._id}">View Listing</a>`);
-  res.redirect('/profile');
+  req.flash('success', `Successfully created <strong class="text-capitalize">${listing.name}</strong>`);
+  res.redirect(`/listing/${listing._id}`);
 };
 
 
@@ -135,6 +135,12 @@ exports.searchListings = async (req, res) => {
   res.json(listings);
 };
 
+
+exports.deleteListing = async (req, res) => {
+  await Business.deleteOne({ _id: req.params.id });
+  req.flash('success', 'Successfully deleted listing');
+  res.redirect('/profile');
+};
 
 // TODO: export function to a helpers file
 // create demo data
