@@ -1,4 +1,4 @@
-mixin listingCard(result, title, link)
+mixin listingCard(result, title)
   section(class="container")
     div(class="form-container")
       h2(class="section-title") #{title}
@@ -16,4 +16,4 @@ mixin listingCard(result, title, link)
                   small(class="text-muted") &#9733; &#9733; &#9733; &#9733; &#9734;
 
       div(class="view-listings")
-        a(href=`${link}` class="btn btn-lg btn-primary") View more Listings
+        a(href="/explore" class="btn btn-lg btn-primary") Explore Listings
