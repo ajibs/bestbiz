@@ -13,11 +13,16 @@ router.get('/signup', userController.showSignup);
 router.post(
   '/signup',
   userController.validateSignup,
+  userController.sanitizeData,
   authController.signup
 );
 */
 router.get('/login', userController.showLogin);
-router.post('/login', authController.login);
+router.post(
+  '/login',
+  userController.sanitizeData,
+  authController.login
+);
 
 router.get(
   '/profile',
@@ -48,23 +53,35 @@ router.get(
 router.post(
   '/create-listing/:id',
   authController.isLoggedIn,
+  userController.validateListing,
+  userController.sanitizeData,
   catchErrors(listingController.updateListing)
-)
+);
 
 
 router.get('/explore', catchErrors(listingController.showExplore));
-router.post('/explore', catchErrors(listingController.getListingsByNameOrDescription));
+router.post(
+  '/explore',
+  userController.sanitizeData,
+  catchErrors(listingController.getListingsByNameOrDescription)
+);
 
 
-router.get(
-  '/listing/:id/delete',
+// TODO: Change to POST request for enhanced security
+router.post(
+  '/delete-listing',
   authController.isLoggedIn,
+  userController.sanitizeData,
   catchErrors(listingController.deleteListing)
 );
 
 // search API
 // http://localhost:3000/api/search/?q=
-router.get('/api/search/', catchErrors(listingController.searchListings));
+router.get(
+  '/api/search/',
+  userController.sanitizeData,
+  catchErrors(listingController.searchListings)
+);
 
 router.get('/logout', authController.logout);
 

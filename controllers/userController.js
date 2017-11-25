@@ -76,8 +76,15 @@ exports.validateListing = (req, res, next) => {
 
 
 exports.sanitizeData = (req, res, next) => {
+  if (req.query.q) {
+    req.body = req.query;
+  }
+
   Object.keys(req.body).forEach((key) => {
     req.body[key] = DOMPurify.sanitize(req.body[key]);
   });
+
   next();
 };
+
+exports.clean = data => DOMPurify.sanitize(data);
