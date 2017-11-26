@@ -1,5 +1,12 @@
 const Business = require('../models/Business');
 const Category = require('../models/Category');
+const {
+  getAllCategories,
+  extractCategories,
+  incrementViews,
+  tieListingtoCategory,
+  searchDB
+} = require('./utilityController');
 
 
 exports.showHome = async (req, res) => {
@@ -15,25 +22,21 @@ exports.showHome = async (req, res) => {
 
 
 exports.showListingForm = async (req, res) => {
-  const allCategories = await Category.find();
-  const choices = allCategories.map(element => element.name);
+  const allCategories = await getAllCategories();
+
   res.render('editListing', {
     title: 'Create Listing',
     listing: {},
-    choices
+    allCategories
   });
 };
-
-
-// TODO: export function to a helpers file
-function extractCategories(data) {
-  return data.split(',');
-}
 
 
 exports.addNewListing = async (req, res) => {
   req.body.categories = extractCategories(req.body.categories);
   const listing = await (new Business(req.body)).save();
+
+  tieListingtoCategory(listing.categories, String(listing._id));
 
   req.flash('success', `Successfully created <strong class="text-capitalize">${listing.name}</strong>`);
   res.redirect(`/listing/${listing._id}`);
@@ -51,8 +54,7 @@ exports.showSingleListing = async (req, res) => {
   }
 
   if (!req.user) {
-    listing.views += 1;
-    await listing.save();
+    incrementViews(listing);
   }
 
   res.render('listingDetails', {
@@ -62,15 +64,14 @@ exports.showSingleListing = async (req, res) => {
 };
 
 
-exports.editListing = async (req, res) => {
+exports.showEditListing = async (req, res) => {
   const listing = await Business.findOne({ _id: req.params.id });
-  const allCategories = await Category.find();
-  const choices = allCategories.map(element => element.name);
+  const allCategories = await getAllCategories();
 
   res.render('editListing', {
     title: `Edit ${listing.name}`,
     listing,
-    choices
+    allCategories
   });
 };
 
@@ -86,6 +87,8 @@ exports.updateListing = async (req, res) => {
       runValidators: true
     }
   );
+
+  tieListingtoCategory(listing.categories, String(listing._id));
 
   req.flash('success', `Successfully updated <strong>${listing.name}</strong>. <a href="/listing/${listing._id}">View Listing</a>`);
   res.redirect(`/listing/${listing._id}/edit`);
@@ -103,20 +106,6 @@ exports.showExplore = async (req, res) => {
     listings
   });
 };
-
-
-// TODO: export function to a helpers file
-async function searchDB(value) {
-  const results = await Business.find({
-    $text: {
-      $search: value
-    }
-  })
-    .sort({ created: 'desc' })
-    .limit(5);
-
-  return results;
-}
 
 
 exports.getListingsByNameOrDescription = async (req, res) => {
@@ -137,7 +126,7 @@ exports.getListingsByNameOrDescription = async (req, res) => {
 };
 
 
-exports.searchListings = async (req, res) => {
+exports.searchListingsAPI = async (req, res) => {
   const listings = await searchDB(req.query.q.toLowerCase());
   res.json(listings);
 };
@@ -150,8 +139,9 @@ exports.deleteListing = async (req, res) => {
 };
 
 
-exports.categories = async (req, res) => {
-  const allCategories = await Category.find();
+exports.showCategories = async (req, res) => {
+  const allCategories = await getAllCategories();
+
   res.render('categories', {
     title: 'Categories',
     allCategories
@@ -160,7 +150,7 @@ exports.categories = async (req, res) => {
 
 
 exports.createCategory = async (req, res) => {
-  const name = req.body.category;
+  const name = req.body.category.toLowerCase();
   const exists = await Category.findOne({ name });
 
   if (exists) {
@@ -169,46 +159,8 @@ exports.createCategory = async (req, res) => {
     return;
   }
 
-  await (new Category({ name, listings: [] })).save();
+  await (new Category({ name, businesses: [] })).save();
+
   req.flash('success', `<strong>${name}</strong> added to categories`);
   res.redirect('/categories');
-};
-
-
-// TODO: export function to a helpers file
-// create demo data
-exports.seedDB = async (req, res) => {
-  const baseData = {
-    address: 'lagos, nigeria',
-    website: 'https://domain.com',
-    email: 'hello@domain.com',
-    phone: '+23412345678',
-    categories: [
-      'software development',
-      ' design',
-      ' user experience',
-      ' business'
-    ]
-  };
-  const companies = [
-    { name: 'konga', description: 'buy anything online' },
-    { name: 'devcenter', description: 'hire great developers' },
-    { name: 'paystack', description: 'simple payments' },
-    { name: 'andela', description: 'training world class developers' },
-    { name: 'jumia', description: 'best online shopping' },
-    { name: 'flutterwave', description: 'powerful payments apis' },
-    { name: 'hotels.ng', description: 'book hotels in nigeria' },
-    { name: 'booking.com', description: 'largest hotel booking website' }
-  ];
-
-  const demo = await companies.map(company => Object.assign({}, baseData, company));
-
-  await Business.remove({}, () => {
-    demo.forEach((element) => {
-      new Business(element).save();
-    });
-  });
-
-  req.flash('success', 'Database Seeded Successfully');
-  res.redirect('/');
 };

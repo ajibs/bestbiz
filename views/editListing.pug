@@ -16,12 +16,12 @@ block content
         +listingFormInput('phone', 'tel', '+2347012345678', listing)
 
         label(class="text-capitalize") Categories
-        - const categories = listing.categories || []
+        - const choices = listing.categories || []
         ul.tags
-          each choice in choices
+          each c in allCategories
             .tag.tag__choice
-              input(type="checkbox" id=choice value=choice name="categories" checked=(categories.includes(choice)))
-              label(for=choice) #{choice}
+              input(type="checkbox" id=c value=c name="categories" checked=(choices.includes(c)))
+              label(for=c) #{c}
 
         div(form-footer form-group pull-right)
           input(class="btn btn-success" type="submit" value="Submit")

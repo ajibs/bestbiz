@@ -2,6 +2,7 @@ const express = require('express');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 const listingController = require('../controllers/listingController');
+const utilityController = require('../controllers/utilityController');
 const { catchErrors } = require('../handlers/errorHandlers');
 
 const router = express.Router();
@@ -49,7 +50,7 @@ router.get('/listing/:id', catchErrors(listingController.showSingleListing));
 router.get(
   '/listing/:id/edit',
   authController.isLoggedIn,
-  catchErrors(listingController.editListing)
+  catchErrors(listingController.showEditListing)
 );
 router.post(
   '/create-listing/:id',
@@ -80,14 +81,14 @@ router.post(
 router.get(
   '/api/search/',
   userController.sanitizeData,
-  catchErrors(listingController.searchListings)
+  catchErrors(listingController.searchListingsAPI)
 );
 
 
 router.get(
   '/categories',
   authController.isLoggedIn,
-  listingController.categories
+  listingController.showCategories
 );
 router.post(
   '/categories',
@@ -99,7 +100,7 @@ router.post(
 router.get('/logout', authController.logout);
 
 // TODO: comment out route
-router.get('/seed', catchErrors(listingController.seedDB));
+router.get('/seed', catchErrors(utilityController.seedDB));
 
 
 module.exports = router;

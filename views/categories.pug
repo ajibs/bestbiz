@@ -5,12 +5,13 @@ include mixins/_listingFormInput
 block content
   section(class="container-fluid")
     div(class="form-container col-md-6 col-md-offset-3")
-      h1(class="form-header text-capitalize") #{title}
-      form(action="/categories" method="POST")
+      h1(class="text-capitalize") #{title}
+      form(action="/categories" method="POST" class="form-footer account-type")
         input(type="hidden" name="_csrf" value= csrfToken)
-        +listingFormInput('category', 'text', 'enter a new category')
-        div(form-footer form-group)
-          input(class="btn btn-success" type="submit" value="Submit")
+        input(class="form-control large-search" type="text" name="category" placeholder="enter a new category" autofocus)
+        input(class="btn btn-success top-wrapper" type="submit" value="Add")
       div
+        h2.text-bold Existing Categories
         each c in allCategories
-          h3 #{c.name}
+          h4 #{c}
+      a(href="/create-listing" class="btn btn-primary btn-lg icon-wrapper") Create a Listing

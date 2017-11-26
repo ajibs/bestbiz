@@ -6,7 +6,7 @@ const categorySchema = new mongoose.Schema({
     trim: true,
     required: 'You must supply a category name!'
   },
-  listings: [String]
+  businesses: [String]
 });
 
 
