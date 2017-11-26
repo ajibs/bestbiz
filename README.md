@@ -9,6 +9,8 @@ Bestbiz is a [Devcenter](https://devcenter.co/) Project.
 * User can search listings through name and description.
 * Authenticated user can create a listing for a business.
 * New listing contains: business name, address, description, website url, categories, email and phone.
+* Authenticated user can create multiple categories.
+* A business listing can belong to multiple categories.
 * Authenticated user can see how many views a business listing has had.
 * Authenticated user can modify or delete a listing.
 * Search API for listing name and description.
