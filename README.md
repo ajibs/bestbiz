@@ -44,6 +44,16 @@ https://bestbiz.herokuapp.com/api/search/?q=payments
 
 
 ## Setup
+#### Local Copy
+To create a local copy, run the following in your terminal:
+```bash
+git clone https://github.com/ajibs/bestbiz.git
+```
+Then change into the local directory, run the following in your terminal:
+```bash
+cd bestbiz
+```
+
 #### Install Node.js and Yarn
 If you don't have Node.js installed, please go ahead and grab it [here](https://nodejs.org/). This project uses ES6+ features and requires Node version `<=8.9.1`
 
