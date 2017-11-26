@@ -100,7 +100,7 @@ router.post(
 router.get('/logout', authController.logout);
 
 // TODO: comment out route
-router.get('/seed', catchErrors(utilityController.seedDB));
+// router.get('/seed', catchErrors(utilityController.seedDB));
 
 
 module.exports = router;
