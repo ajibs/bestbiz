@@ -48,7 +48,7 @@ exports.showSingleListing = async (req, res) => {
   const listing = await Business.findOne({ _id: req.params.id });
 
   if (!listing) {
-    req.flash('failed', 'Error! listing not found');
+    req.flash('failed', 'Error! listing NOT found');
     res.redirect('back');
     return;
   }
@@ -112,7 +112,7 @@ exports.getListingsByNameOrDescription = async (req, res) => {
   const listings = await searchDB(req.body.term.toLowerCase());
 
   if (!listings.length) {
-    req.flash('failed', `Listings not found for '${req.body.term}'`);
+    req.flash('failed', `Listings NOT found for '${req.body.term}'`);
     res.redirect('back');
     return;
   }
