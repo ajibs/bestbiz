@@ -111,7 +111,6 @@ npm run dev
 ## Possible Features
 - Change listing url to slugs
 - Authenticated user can upload an image when creating a listing
-- Table view of all listings on the dashboard, with ability to edit, see views and delete listings.
 - Pagination for pages with a lot of data to display e.g. explore page, dashboard
 
 
